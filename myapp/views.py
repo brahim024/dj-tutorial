@@ -1,10 +1,14 @@
-from django.http import Http404
+from django.http import HttpResponseRedirect
 from django.shortcuts import render
-from .models import Artist
+
+from .forms import UploadFileForm
+from somewhere import handle_uploaded_file
 # Create your views here.
-def artists(request):
-	try:
-		artist=Artist.objects.all()
-	except Artist.DoesNotExist:
-		raise Http404('poll does not exist')
-	return render(request,'index.html',{'artist':artist})
+def upload_file(request):
+	if request.method=='POST':
+		form=UploadFileForm(request.POST,request.FILES)
+		if request.is_valid():
+			handle_uploaded_file(request>FILES['file'])
+	else:
+		form =UploadFileForm()
+	return render(request,'upload.html',{'forms':form})
