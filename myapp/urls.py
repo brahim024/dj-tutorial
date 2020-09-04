@@ -1,5 +1,5 @@
 from django.urls import path
-from. import views
+from myapp.views import PersonCreateView
 urlpatterns=[
-	path('bombi',views.artist,name='artist'),
+	path('bombi',PersonCreateView.as_view(),name='PersonCreateView'),
 ]

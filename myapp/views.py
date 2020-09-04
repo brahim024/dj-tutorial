@@ -1,7 +1,6 @@
-from django.http import HttpResponse
-import datetime
-from django.shortcuts import redirect
-from .models import Artist
+from django.views.generic import CreateView
+from django.shortcuts import render
+from .models import Person
 #from .forms import UploadFileForm
 #from somewhere import handle_uploaded_file
 # Create your views here.
@@ -13,8 +12,8 @@ from .models import Artist
 			return HttpResponseRedirect('succes/url/')
 	else:
 		form =UploadFileForm()
-	return render(request,'index.html',{'forms':form})
-	'''
-def artist(request):
-	obj=Artist.objects.all()
-	return redirect('https://github.com/')
+	return render(request,'index.html',{'forms':form})'''
+class PersonCreateView(CreateView):
+	model = Person
+	template_name='person_form.html'
+	fields = ('name','age','job_type','bio')
