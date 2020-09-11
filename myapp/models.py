@@ -15,10 +15,25 @@ class Person(models.Model):
 	age=models.PositiveIntegerField()
 	class Meta:
 		abstract=True'''
-class Product(models.Model):
+class Publisher(models.Model):
 	name=models.CharField(max_length=20)
-	image=models.ImageField('img')
-	like=models.ManyToManyField(User,blank=True)
-
+	address=models.CharField(max_length=30)
+	city=models.CharField(max_length=30)
+	state=models.CharField(max_length=20)
+	website=models.URLField()
 	def __str__(self):
 		return self.name
+class Author(models.Model):
+	salutation=models.CharField(max_length=20)
+	name=models.CharField(max_length=20)
+	email=models.EmailField()
+	headshot=models.ImageField(upload_to='author_headshots')
+	def __str__(self):
+		return self.name
+class Book(models.Model):
+	title=models.CharField(max_length=50)
+	authers=models.ManyToManyField('Author')
+	pubisher=models.ForeignKey(Publisher,on_delete=models.CASCADE)
+	def __str__(self):
+		return self.title
+	
