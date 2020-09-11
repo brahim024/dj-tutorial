@@ -15,8 +15,11 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path,include
+from myapp import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('',include('myapp.urls')),
+    path('favorite/<int:id>', views.product,name='detail'),
+    path('favorite/<int:id>/like_deslike', views.like_deslike,name='like'),
+    path('user/favorite', views.user_favorite,name='user_favorite'),    
 ]

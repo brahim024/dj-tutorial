@@ -1,24 +1,13 @@
-{% extends 'base.html' %}
-{% load crispy_forms_tags %}
-**person_form.html**
-{% block content %}
-  <form method="post">
-    {% csrf_token %}
-    <div class="row">
-        <div class="col-6">
-            {{ form.name|as_crispy_field}}
-        </div>
-        <div class="col-6">
-            {{form.email|as_crispy_field}}
-        </div>
+{% for person in user_favorite %}
+<div class="card" style="width: 18rem;">
+    <img src="https://mspoweruser.com/wp-content/uploads/2019/06/Lenovo-ThinkPad-X1-Carbon.jpg" class="card-img-top" alt="...">
+    <div class="card-body">
+      <h5 class="card-title">{{person.name}}</h5>
+      <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+      
     </div>
-    {{form.job_type|as_crispy_field}}
-    {form.bio|as_crispy_field}}
-    <button type="submit" class="btn btn-success">Save person</button>
-  </form>
-
-{% endblock %}
-
+  </div>
+{% endfor %}
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
