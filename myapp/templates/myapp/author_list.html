@@ -3,13 +3,13 @@
 {% block content %}
     <h2>Publishers</h2>
     <ul>
-        {% for publisher in object_list %}
+        {% for author in object_list %}
+        <li>{{ author.name }}</li>
+        <li>{{ author.email }}</li>
         <div class="text-center">
-            <img src="{{ publisher.headshot.url }}" class="rounded" alt="...">
+            <img src="{{ author.headshot.url }}" class="rounded" alt="...">
+        
         </div>
-            <li>{{ publisher.name }}</li>
-            <li>{{ publisher.address }}</li>
-            <li>{{ publisher.city }}</li>
         {% endfor %}
     </ul>
 {% endblock %}
