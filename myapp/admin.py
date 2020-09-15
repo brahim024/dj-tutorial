@@ -1,6 +1,17 @@
 from django.contrib import admin
-from .models import Publisher , Author, Book
+from .models import Post
 # Register your models here.
-admin.site.register(Publisher)
-admin.site.register(Author)
-admin.site.register(Book)
+@admin.register(Post)
+class PostAdmin(admin.ModelAdmin):
+	list_desplay=('title','slug','author','publisher','status')
+	list_filter=('status','created','publish','author')
+	search_fields=('title','body')
+	prepopulated_fields = {'slug': ('title',)}
+	raw_id_fields = ('author',)
+  	
+
+'''
+		('Name' ,{'fields':['title']}),
+
+
+	]'''

@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
-
+from django.utils import timezone
 # Create your models here.
 '''class Person(models.Model):
 	name=models.CharField(max_length=20)
@@ -18,27 +18,33 @@ class Person(models.Model):
 def author_headshots(instance,filename):
     imagename , extension = filename.split(".")
     return "jobs/%s.%s"%(instance.id,extension)
+class PublishedManager(models.Manager):
+	def get_queryset(self):
+		return super(PublishedManager,
+			self).get_queryset()\
+				.filter(status='published')
 
-class Publisher(models.Model):
-	name=models.CharField(max_length=20)
-	address=models.CharField(max_length=30)
-	city=models.CharField(max_length=30)
-	state=models.CharField(max_length=20)
-	website=models.URLField()
-	
+
+			
+
+class Post(models.Model):
+	STATUS_CHOICES = (
+	('draft', 'Draft'),
+	('published', 'Published'),
+	)
+	title = models.CharField(max_length=250)
+	slug = models.SlugField(max_length=250,unique_for_date='publish')
+	author = models.ForeignKey(User,on_delete=models.CASCADE,related_name='blog_posts')
+	body = models.TextField()
+	publish = models.DateTimeField(default=timezone.now)
+	created = models.DateTimeField(auto_now_add=True)
+	updated = models.DateTimeField(auto_now=True)
+	status = models.CharField(max_length=10,
+	choices=STATUS_CHOICES,
+	default='draft')
+	objects=models.Manager()
+	published=models.PublishedManager()
 	def __str__(self):
-		return self.name
-class Author(models.Model):
-	salutation=models.CharField(max_length=20)
-	name=models.CharField(max_length=20)
-	email=models.EmailField()
-	headshot=models.ImageField(upload_to=author_headshots)
-	def __str__(self):
-		return self.name
-class Book(models.Model):
-	title=models.CharField(max_length=50)
-	authers=models.ManyToManyField('Author')
-	pubisher=models.ForeignKey(Publisher,on_delete=models.CASCADE)
-	def __str__(self):
-		return self.title
-	
+ 		return self.title
+class Meta:
+	ordering = ('-publish',)
