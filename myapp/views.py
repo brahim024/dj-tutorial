@@ -1,17 +1,13 @@
 #from django.views.generic.base import TemplateView
-from django.shortcuts import render 
+from django.shortcuts import render ,get_object_or_404
 from django.core.paginator import Paginator, EmptyPage,\
  									PageNotAnInteger
-#from django.views.generic import ListView
+from django.views.generic import ListView
 #from django.views import View
 #from django.http import HttpResponseForbidden,HttpResponsePermanentRedire
 # from django .urls import reverse
 from myapp.models import Post
-'''class PostListView(ListView):
-	queryset=Post.objects.all()
-	context_object_name='posts'
-	paginate_by= 2
-	template_name='myapp/author1.html'''
+
 def post_list(request):
 	object_list=Post.objects.all()
 	paginator=Paginator(object_list,2) #her we want 2 objects(post)
@@ -24,7 +20,8 @@ def post_list(request):
 	except EmptyPage:
 		#if page has out of range
 		posts=paginator.page(paginator.num_pages)
-	return render(request,'post_list.html',{'posts':posts})
+	return render(request,'post_list.html',{'posts':posts,'page':page})
+
 
 
 
@@ -37,8 +34,11 @@ def post_details(request,year,month,day ,post):
 								publish__day=day)
 	return render(request,'post_details.html',{'post':post})
 
-
-
+class PostListView(ListView):
+	queryset=Post.objects.all()
+	context_object_name='posts'
+	paginate_by= 2
+	template_name='post_list.html'
 
 
 								
