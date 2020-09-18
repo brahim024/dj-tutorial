@@ -3,10 +3,10 @@ from django.shortcuts import render ,get_object_or_404
 from django.core.paginator import Paginator, EmptyPage,\
  									PageNotAnInteger
 from django.views.generic import ListView
-from myapp.models import Post
+from myapp.models import Post, Comment
 from django.core.mail import send_mail
 from .forms import EmailPostForm ,CommentForm
-from .models import Comment
+
 def post_list(request):
 	object_list=Post.objects.all()
 	paginator=Paginator(object_list,2) #her we want 2 objects(post)
@@ -34,7 +34,7 @@ def post_details(request,year,month,day ,post):
 		if comment_form.is_valid():
 			#create comment objets but dont save it in database
 			new_comment=comment_form.save(commit=False)
-			new_comment.post.post
+			new_comment.post=post
 			#save the comment to the database
 			new_comment.save()
 	else:
