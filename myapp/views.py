@@ -5,8 +5,8 @@ from django.core.paginator import Paginator, EmptyPage,\
 from django.views.generic import ListView
 from myapp.models import Post
 from django.core.mail import send_mail
-from .forms import EmailPostForm
-
+from .forms import EmailPostForm ,CommentForm
+from .models import Comment
 def post_list(request):
 	object_list=Post.objects.all()
 	paginator=Paginator(object_list,2) #her we want 2 objects(post)
@@ -27,13 +27,31 @@ def post_details(request,year,month,day ,post):
 								publish__year=year,
 								publish__month=month,
 								publish__day=day)
-	return render(request,'post_details.html',{'post':post})
+	comments=post.comments.filter(active=True)
+	new_comment=None
+	if request.method=='POST':
+		comment_form=CommentForm(data=request.POST)
+		if comment_form.is_valid():
+			#create comment objets but dont save it in database
+			new_comment=comment_form.save(commit=False)
+			new_comment.post.post
+			#save the comment to the database
+			new_comment.save()
+	else:
+		comment_form=CommentForm()
+
+	return render(request,'post_details.html',{'post':post,'comment_form':comment_form})
+
+
+
 #return pagination aith class based views
 class PostListView(ListView):
 	queryset=Post.objects.all()
 	context_object_name='posts'
 	paginate_by= 2
 	template_name='post_list.html'
+
+
 def post_share(request, post_id):
     # Retrieve post by id
     post = get_object_or_404(Post, id=post_id, status='published')
@@ -55,5 +73,8 @@ def post_share(request, post_id):
     else:
         form = EmailPostForm()
     return render(request, 'share.html', {'post': post,
-                                                    'form': form,
+                                      				'form': form,
                                                     'sent': sent})
+
+
+

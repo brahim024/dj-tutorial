@@ -9,14 +9,40 @@
  {{ post.body}}
  <div class="btn mt-7">
 <a class="btn btn-primary" href="{% url 'blog:post_share' post.id %}" role="button">Share This Post</a>
+<!--- adding comments to the post details--->
+{% with comments.count as total_comments %}
+<h2>
+	{{total_comments}} Comment {{ total_comment|pluralize}}
+</h2>
+
+{% endwith %}
+{% for comment in comments %}
+<div class="comment">
+	<p class="info">
+		Comment {{ forloop.countes}} by {{comment.name}} {{comment.created}}
+	</p>
+	{{comment.body|linebreaks}}
+</div>
+{% empty %}
+{% endfor %}
+<!--- finish adding comments to the post details--->
+
+
+<!---- add forms to commend-->
+{% if new_comment %}
+ <h2>Your comment has been added.</h2>
+{% else %}
+ <h2>Add a new comment</h2>
+ <form method="post">
+ {{ comment_form.as_p }}
+ {% csrf_token %}
+ <p><input type="submit" value="Add comment"></p>
+ </form>
+{% endif %}
+<!---- end forms her --->
 </div>
 {% endblock %}
 
 
 
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
 
-
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
