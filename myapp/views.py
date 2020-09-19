@@ -40,7 +40,7 @@ def post_details(request,year,month,day ,post):
 	else:
 		comment_form=CommentForm()
 
-	return render(request,'post_details.html',{'post':post,'comment_form':comment_form})
+	return render(request,'post_details.html',{'post':post,'comments':comments,'comment_form':comment_form})
 
 
 
