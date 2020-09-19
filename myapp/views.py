@@ -6,9 +6,14 @@ from django.views.generic import ListView
 from myapp.models import Post, Comment
 from django.core.mail import send_mail
 from .forms import EmailPostForm ,CommentForm
-
+from taggit.models import Tag
 def post_list(request):
 	object_list=Post.objects.all()
+	#----tag-----
+	tag=None
+	if tag_slug:
+		tag=get_object_or_404(Tag, slug=tag_slug)
+		object_list=object_list.filter(tags__in=[tag])
 	paginator=Paginator(object_list,2) #her we want 2 objects(post)
 	page=request.GET.get('page')
 	try:
@@ -19,7 +24,7 @@ def post_list(request):
 	except EmptyPage:
 		#if page has out of range
 		posts=paginator.page(paginator.num_pages)
-	return render(request,'post_list.html',{'posts':posts,'page':page})
+	return render(request,'post_list.html',{'posts':posts,'page':page,'tag':tag})
 #her we have details function
 def post_details(request,year,month,day ,post):
 	post=get_object_or_404(Post,slug=post,
