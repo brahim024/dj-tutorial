@@ -7,13 +7,16 @@ from myapp.models import Post, Comment
 from django.core.mail import send_mail
 from .forms import EmailPostForm ,CommentForm
 from taggit.models import Tag
-def post_list(request):
+from django.db.models import Count
+
+def post_list(request,tag_slug=None):
 	object_list=Post.objects.all()
 	#----tag-----
 	tag=None
 	if tag_slug:
 		tag=get_object_or_404(Tag, slug=tag_slug)
 		object_list=object_list.filter(tags__in=[tag])
+
 	paginator=Paginator(object_list,2) #her we want 2 objects(post)
 	page=request.GET.get('page')
 	try:
@@ -24,6 +27,7 @@ def post_list(request):
 	except EmptyPage:
 		#if page has out of range
 		posts=paginator.page(paginator.num_pages)
+
 	return render(request,'post_list.html',{'posts':posts,'page':page,'tag':tag})
 #her we have details function
 def post_details(request,year,month,day ,post):
@@ -44,6 +48,12 @@ def post_details(request,year,month,day ,post):
 			new_comment.save()
 	else:
 		comment_form=CommentForm()
+	post_tags_ids=post.tags.value_list('id',flat=True)
+	similar_posts=Post.objects.filter(tags__in=post_tags_ids)\
+								.exclude(id=post.id)
+	similar_posts=similar_posts.annonate(same_tags=Count('tags'))\
+								.order_by('-same_tags','-publish')[:4]
+
 
 	return render(request,'post_details.html',{'post':post,'comments':comments,'comment_form':comment_form})
 
