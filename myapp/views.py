@@ -16,8 +16,8 @@ def post_list(request,tag_slug=None):
 	if tag_slug:
 		tag=get_object_or_404(Tag, slug=tag_slug)
 		object_list=object_list.filter(tags__in=[tag])
-
-	paginator=Paginator(object_list,2) #her we want 2 objects(post)
+# -------- end tags-------
+	paginator=Paginator(object_list,2) #her we want 2 objects(post) [pagination]
 	page=request.GET.get('page')
 	try:
 		posts=paginator.page(page)
@@ -56,7 +56,7 @@ def post_details(request,year,month,day ,post):
 								.order_by('-same_tags','-publish')[:4]
 
 
-	return render(request,'post_details.html',{'post':post,'comments':comments,'comment_form':comment_form})
+	return render(request,'post_details.html',{'post':post,'comments':comments,'comment_form':comment_form,'similar_posts':similar_posts})
 
 
 

@@ -38,7 +38,8 @@ class Post(models.Model):
 	default='draft')
 
 	tags = TaggableManager()
-
+	
+		
 
 	class Meta:
 		ordering = ('-publish',)
@@ -64,3 +65,4 @@ class Comment(models.Model):
 		ordering=('created',)
 	def __str__(self):
 		return f'Comment by {self.name} on {self.post}'
+
