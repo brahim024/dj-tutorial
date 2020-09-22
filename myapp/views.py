@@ -36,6 +36,7 @@ def post_details(request,year,month,day ,post):
 								publish__year=year,
 								publish__month=month,
 								publish__day=day)
+	#------- her we create comment system
 	comments=post.comments.filter(active=True)
 	new_comment=None
 	if request.method=='POST':
@@ -56,7 +57,10 @@ def post_details(request,year,month,day ,post):
 								.order_by('-same_tags','-publish')[:4]
 
 
-	return render(request,'post_details.html',{'post':post,'comments':comments,'comment_form':comment_form,'similar_posts':similar_posts})
+	return render(request,'post_details.html',{'post':post,
+						'comments':comments,             # this context from comment=post.comment.filter with active comment 
+						'comment_form':comment_form,     # this context from comment data form 
+						'similar_posts':similar_posts})  # this context from similar post
 
 
 
