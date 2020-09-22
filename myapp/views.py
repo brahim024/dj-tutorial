@@ -17,7 +17,7 @@ def post_list(request,tag_slug=None):
 		tag=get_object_or_404(Tag, slug=tag_slug)
 		object_list=object_list.filter(tags__in=[tag])
 # -------- end tags-------
-	paginator=Paginator(object_list,2) #her we want 2 objects(post) [pagination]
+	paginator=Paginator(object_list,3) #her we want 2 objects(post) [pagination]
 	page=request.GET.get('page')
 	try:
 		posts=paginator.page(page)
@@ -49,10 +49,10 @@ def post_details(request,year,month,day ,post):
 			
 	else:
 		comment_form=CommentForm()
-	post_tags_ids=post.tags.value_list('id',flat=True)
+	post_tags_ids=post.tags.values_list('id',flat=True)
 	similar_posts=Post.objects.filter(tags__in=post_tags_ids)\
 								.exclude(id=post.id)
-	similar_posts=similar_posts.annonate(same_tags=Count('tags'))\
+	similar_posts=similar_posts.annotate(same_tags=Count('tags'))\
 								.order_by('-same_tags','-publish')[:4]
 
 
