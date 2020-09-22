@@ -1,8 +1,7 @@
 body { 
     margin:0;
     padding:0;
-    font-family:arial, sans-serif; ;
-    
+    font-family:helvetica, sans-serif; 
 }
 
 a { 
@@ -37,7 +36,7 @@ h2 {
 
 p.date { 
     color:#ccc;
-    font-family: helvetica, sans-serif; 
+    font-family: georgia, serif;
     font-size: 12px;
     font-style: italic; 
 }
