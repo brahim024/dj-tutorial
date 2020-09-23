@@ -50,6 +50,7 @@ def post_details(request,year,month,day ,post):
 			
 	else:
 		comment_form=CommentForm()
+		#tags and similar tags
 	post_tags_ids=post.tags.values_list('id',flat=True)
 	similar_posts=Post.objects.filter(tags__in=post_tags_ids)
 								
