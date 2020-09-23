@@ -20,6 +20,6 @@ def get_most_commented_posts(count=5):
 		total_comments=Count('comments')
 		).order_by('-total_comments')[:count]
 
-@register.filetr(name='markdown')
+@register.filter(name='markdown')
 def mark_down_format(text):
 	return mark_safe(markdown.markdown(text))
