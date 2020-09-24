@@ -27,7 +27,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-
+ 
 # Application definition
 
 INSTALLED_APPS = [
@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'django.contrib.sitemaps',
 
 ]
+SITE_ID = 1
 #CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 MIDDLEWARE = [
