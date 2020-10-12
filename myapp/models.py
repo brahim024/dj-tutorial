@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 from django.utils import timezone
 from django.urls import reverse
 from taggit.managers import TaggableManager
-from django.core.exception import ValidationError
+from django.core.exceptions import ValidationError
 # Create your models here.
 '''class Person(models.Model):
 	name=models.CharField(max_length=20)
@@ -21,7 +21,7 @@ class Person(models.Model):
 def validate_image(image):
 	file_size=image.file.size
 	limit_mb=150
-	if sile_size>limit_mb * 1024 *1024:
+	if file_size>limit_mb * 1024 *1024:
 		raise ValidationError('image size of the file is %s MB'% limit_mb)
 
 
@@ -46,12 +46,10 @@ class Post(models.Model):
 	status = models.CharField(max_length=10,
 	choices=STATUS_CHOICES,
 	default='draft')
-	image=models.ImageField(upload_to='author_headshots',ValidationError=[validate_image])
+	image=models.ImageField(upload_to='author_headshots',validators=[validate_image])
 
 	tags = TaggableManager()
 	
-		
-
 	class Meta:
 		ordering = ('-publish',)
 
