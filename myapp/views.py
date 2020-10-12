@@ -13,7 +13,7 @@ def post_list(request,tag_slug=None):
 	object_list=Post.objects.all()
 	#----tag-----
 	tag=None
-	if tag_slug:
+	if tag_slug: 
 		tag=get_object_or_404(Tag, slug=tag_slug)
 		object_list=object_list.filter(tags__in=[tag])
 # -------- end tags-------
