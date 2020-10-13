@@ -22,9 +22,6 @@ class Person(models.Model):
 
 
 
-def author_headshots(instance,filename):
-    imagename , extension = filename.split(".")
-    return "jobs/%s.%s"%(instance.id,extension)
 
 class Post(models.Model):
 	STATUS_CHOICES = (
@@ -42,7 +39,7 @@ class Post(models.Model):
 	choices=STATUS_CHOICES,
 	default='draft')
 	#image=models.ImageField(upload_to='author_headshots')
-
+	image=models.ImageField(upload_to='post/%Y',blank=True)
 	tags = TaggableManager()
 	
 	class Meta:
