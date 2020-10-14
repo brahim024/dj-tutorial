@@ -29,6 +29,7 @@ urlpatterns = [
     path('blog/',include('myapp.urls',namespace='blog')),
     path('sitemap.xml', sitemap, {'sitemaps': sitemaps},
  				name='django.contrib.sitemaps.views.sitemap'),
+    path('social-auth/', include('social_django.urls', namespace='social')),
 ]
 
 urlpatterns += staticfiles_urlpatterns()
