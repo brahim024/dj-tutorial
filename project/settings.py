@@ -31,8 +31,10 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'myapp',
     'rest_framework',
+    'myapp',
+    'login',
+    'django-social',
     'bootstrap4',
     'django.contrib.admin',
     'django.contrib.auth',

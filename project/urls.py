@@ -30,6 +30,7 @@ urlpatterns = [
     path('sitemap.xml', sitemap, {'sitemaps': sitemaps},
  				name='django.contrib.sitemaps.views.sitemap'),
     path('api-auth/', include('rest_framework.urls')),
+    path('login',include('login.urls'namespace='login')),
     path('social-auth/', include('social_django.urls', namespace='social')),
 ]
 
