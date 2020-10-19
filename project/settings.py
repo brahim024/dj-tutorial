@@ -32,6 +32,7 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'myapp',
+    'rest_framework',
     'bootstrap4',
     'account',
     'django.contrib.admin',
