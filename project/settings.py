@@ -34,7 +34,6 @@ INSTALLED_APPS = [
     'myapp',
     'rest_framework',
     'bootstrap4',
-    'account',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -43,7 +42,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'crispy_forms',
     'taggit',
-    'social_django',
     'django.contrib.sites',
     'django.contrib.sitemaps',
 
@@ -137,10 +135,6 @@ STATICFILES_DIRS = [
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
-LOGIN_REDIRECT_URL = 'dashboard'
-LOGIN_URL = 'login'
-LOGOUT_URL = 'logout'
-
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
@@ -151,9 +145,3 @@ EMAIL_HOST_PASSWORD = 'admin000'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 
-from django.urls import reverse_lazy
-
-ABSOLUTE_URL_OVERRIDES = {
-    'auth.user': lambda u: reverse_lazy('user_detail',
-                                        args=[u.username])
-}
